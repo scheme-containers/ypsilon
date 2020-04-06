@@ -9,19 +9,18 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
        libgmp-dev \
   && rm -rf /var/lib/apt/lists/*
 
-RUN git clone --depth 1 https://github.com/weinholt/ypsilon.git
-WORKDIR ypsilon
-RUN set -uxe; \
-    make; \
-    make install
+WORKDIR /build/
+RUN git clone --depth 1 https://github.com/lambdaconservatory/ypsilon.git
+WORKDIR /build/ypsilon
+RUN make
+RUN make install
 
 FROM debian:buster-slim
 RUN apt-get update && apt-get -y --no-install-recommends install \
        libffi6 \
        libgmp10 \
   && rm -rf /var/lib/apt/lists/*
-COPY --from=build /usr/local/share/ /usr/local/share/
-COPY --from=build /usr/local/bin/ /usr/local/bin/
+COPY --from=build /usr/local/ /usr/local/
 COPY scheme-script /usr/local/bin
 RUN ln -s ypsilon /usr/local/bin/scheme-banner
 CMD ["scheme-banner"]
