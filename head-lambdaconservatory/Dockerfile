@@ -10,7 +10,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build/
-RUN git clone --depth 1 https://github.com/lambdaconservatory/ypsilon.git
+RUN git clone https://github.com/lambdaconservatory/ypsilon.git --depth 1
 WORKDIR /build/ypsilon
 RUN make
 RUN make check
