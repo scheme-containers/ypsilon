@@ -13,6 +13,7 @@ WORKDIR /build/
 RUN git clone --depth 1 https://github.com/lambdaconservatory/ypsilon.git
 WORKDIR /build/ypsilon
 RUN make
+RUN make check
 RUN make install
 
 FROM debian:buster-slim
